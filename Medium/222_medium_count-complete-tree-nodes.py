@@ -1,23 +1,38 @@
-"""
-Given a complete binary tree, count the number of nodes.
-
-Note:
-
-Definition of a complete binary tree from Wikipedia:
-In a complete binary tree every level, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
-
-Example:
-
-Input:
-    1
-   / \
-  2   3
- / \  /
-4  5 6
-
-Output: 6
-"""
-
+#
+# @lc app=leetcode id=222 lang=python
+#
+# [222] Count Complete Tree Nodes
+#
+# https://leetcode.com/problems/count-complete-tree-nodes/description/
+#
+# algorithms
+# Medium (35.69%)
+# Total Accepted:    135K
+# Total Submissions: 378.2K
+# Testcase Example:  '[1,2,3,4,5,6]'
+#
+# Given a complete binary tree, count the number of nodes.
+# 
+# Note: 
+# 
+# Definition of a complete binary tree from Wikipedia:
+# In a complete binary tree every level, except possibly the last, is
+# completely filled, and all nodes in the last level are as far left as
+# possible. It can have between 1 and 2h nodes inclusive at the last level h.
+# 
+# Example:
+# 
+# 
+# Input: 
+# ⁠   1
+# ⁠  / \
+# ⁠ 2   3
+# ⁠/ \  /
+# 4  5 6
+# 
+# Output: 6
+# 
+#
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -32,7 +47,7 @@ class Solution(object):
         :rtype: int
         """
         return self.helper(root)
-
+    
     def helper(self, root):
         if root == None:
             return 0
@@ -50,7 +65,7 @@ class Solution(object):
                 left_size = self.helper(root.left)
                 right_size = 2**(height+1) - 1
                 return left_size + right_size + 1
-
+            
     def isComplete(self, root):
         node = root
         hl = 0
@@ -63,4 +78,4 @@ class Solution(object):
             hr = hr + 1
             node = node.right
         return (hl == hr), hr
-
+            
