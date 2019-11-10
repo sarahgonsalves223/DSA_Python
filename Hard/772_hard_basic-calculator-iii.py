@@ -40,75 +40,47 @@
 class Solution:
     def calculate(self, s: str) -> int:
         """
-        PATHETIC CODE!!!!!
+        A tad bit better looking code.
         Time complexity: O(n) I guess
         Space complexity: O(n) I guess
         """
-        s = s.replace(" ", "")
         stack = []
         i = 0
         while i < len(s):
-            if s[i] == "(":
-                stack.append(s[i])
-            elif s[i].isdigit():
+            if s[i] == " ":
+                i += 1
+                continue
+            if s[i].isdigit():
                 num, i = self.getNumber(s, i)
-                if stack:
-                    if stack[-1] == "*":
-                        stack.pop()
-                        num1 = int(stack.pop())
-                        num = str(int(num) * num1)
-                    elif stack[-1] == "/":
-                        stack.pop()
-                        num1 = stack.pop()
-                        num = str(int(num1) // int(num))
-                stack.append(num)
+                self.multDivide(num, stack)
             elif s[i] == ")":
-                total = 0
-                prev = 0
-                while stack and stack[-1] != "(":
-                    num = stack.pop()
-                    if num[0] == "-" and num != "-":
-                        num = int(num)
-                        prev = int(num)
-                        total += num
-                    elif num.isdigit():
-                        total += int(num)
-                        prev = int(num)
-                    elif num == "-":
-                        total += -2*prev
+                total = self.addUp(stack)            
                 stack.pop()
-                num = total
-                if stack:
-                    if stack[-1] == "*":
-                        stack.pop()
-                        num1 = int(stack.pop())
-                        num = str(int(num) * num1)
-                    elif stack[-1] == "/":
-                        stack.pop()
-                        num1 = stack.pop()
-                        num = str(int(num1) // int(num))
-                stack.append(str(num))
+                self.multDivide(total,stack)
             else:
-                if s[i] == "+":
-                    stack.append(s[i])
-                elif s[i] == "-":
-                    stack.append(s[i])
-                elif s[i] == "*":
-                    stack.append(s[i])
-                elif s[i] == "/":
-                    stack.append(s[i])
-                else:
-                    print("should not be here!")
+                stack.append(s[i])
             i += 1
+        
         total = self.addUp(stack)
         return total
+    
+    def multDivide(self, num, stack):
+        if stack:
+            if stack[-1] == "*":
+                stack.pop()
+                num1 = int(stack.pop())
+                num = str(int(num) * num1)
+            elif stack[-1] == "/":
+                stack.pop()
+                num1 = stack.pop()
+                num = str(int(num1) // int(num))
+        stack.append(str(num))
                 
     def addUp(self, stack):
         if len(stack) == 1:
             return int(stack.pop())
-        print(stack)
         total = 0
-        while stack:
+        while stack and stack[-1] != "(":
             num = stack.pop()
             if num[0] == "-" and num != "-":
                 num = int(num)
